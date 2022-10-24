@@ -12,6 +12,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <mode>DEV</mode>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
     <junit.version>3.8.1</junit.version>
@@ -19,6 +20,14 @@
 
   <build>
     <finalName>${project.artifactId}</finalName>
+
+    <!-- Activer le remplacement des variables via Maven -->
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
     <plugins>
       <!-- configuration du plugin jar -->
       <plugin>
@@ -51,6 +60,7 @@
     </plugins>
   </build>
 
+  <!-- DEPENDANCES -->
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -68,5 +78,27 @@
       <artifactId>plexus-utils</artifactId>
       <version>3.1.0</version>
     </dependency>
+    <dependency>
+      <groupId>com.github.lalyos</groupId>
+      <artifactId>jfiglet</artifactId>
+      <version>0.0.8</version>
+    </dependency>
   </dependencies>
+
+
+  <!-- PROFILES -->
+  <profiles>
+    <!-- Dev -->
+    <profile>
+      <id>dev</id>
+      <activation><activeByDefault>true</activeByDefault></activation>
+      <properties><mode>DEV</mode></properties>
+    </profile>
+
+    <!-- Production -->
+    <profile>
+      <id>prod</id>
+      <properties><mode>PROD</mode></properties>
+    </profile>
+  </profiles>
 </project>
